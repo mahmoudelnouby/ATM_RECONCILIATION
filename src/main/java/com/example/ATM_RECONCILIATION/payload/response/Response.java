@@ -13,6 +13,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class Response {
     protected int statusCode;
-    protected String message;
+    protected String customerMessage;
+    protected String developerMessage;
     protected Object body;
 }

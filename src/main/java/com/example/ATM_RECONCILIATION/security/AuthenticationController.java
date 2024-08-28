@@ -1,6 +1,7 @@
 package com.example.ATM_RECONCILIATION.security;
 
 
+import com.example.ATM_RECONCILIATION.GlobalEnums.ResponseMessage;
 import com.example.ATM_RECONCILIATION.payload.response.Response;
 import com.example.ATM_RECONCILIATION.security.models.request.SignInRequest;
 import com.example.ATM_RECONCILIATION.security.models.request.changePasswordRequest;
@@ -59,16 +60,18 @@ public class AuthenticationController {
             if (auth != null) {
                 new SecurityContextLogoutHandler().logout(request, response, auth);
                 SecurityContextHolder.clearContext();
-                resp.setMessage("Success");
+                resp.setCustomerMessage("Success");
+                resp.setDeveloperMessage(ResponseMessage.Developer_Message.getMessageByApi("Logout"));
                 resp.setStatusCode(200);
                 resp.setBody("LogOut Success ");
                 return new ResponseEntity<>(resp, new HttpHeaders(), HttpStatus.OK);
 
             } else {
 
-                resp.setMessage("Fail");
+                resp.setCustomerMessage("Fail");
                 resp.setStatusCode(500);
-                resp.setMessage("Logout Failed");
+                resp.setCustomerMessage("Logout Failed");
+                resp.setDeveloperMessage(ResponseMessage.Logout_Failed.getMessageByApi("Logout"));
                 return new ResponseEntity<>(resp, new HttpHeaders(), HttpStatus.OK);
                 // You can redirect wherever you want, but generally it's a good practice to
                 // show login screen again.

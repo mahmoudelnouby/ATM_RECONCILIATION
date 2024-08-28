@@ -22,52 +22,52 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ChangeSetPersister.NotFoundException.class)
     public ResponseEntity<?> NotFoundException(ChangeSetPersister.NotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body( new Response(404,ex.getMessage(),"Not Found data"));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body( new Response(404,ex.getMessage(),"","Not Found data"));
     }
     
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<?> handleRuntimeExceptionException(RuntimeException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),"Runtime Exception"));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),"","Runtime Exception"));
     }
 
     @ExceptionHandler(PropertyReferenceException.class)
     public ResponseEntity<?> PropertyReferenceException(PropertyReferenceException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),"There is no exist for this field"));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),"","There is no exist for this field"));
     }
     
     @ExceptionHandler(NumberFormatException.class)
     public ResponseEntity<?> handleNumberFormatException(NumberFormatException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),"Invalid number format"));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),"","Invalid number format"));
     }
 
     @ExceptionHandler(DateTimeParseException.class)
     public ResponseEntity<?> handleDateTimeParseException(DateTimeParseException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),"Invalid date/time format"));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),"","Invalid date/time format"));
     }
 
     @ExceptionHandler(JsonParseException.class)
     public ResponseEntity<?> handleJsonParseException(JsonParseException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),"Invalid JSON format"));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),"","Invalid JSON format"));
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),"Illegal argument"));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),"","Illegal argument"));
     }
     
     @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<?> NullPointerException(NullPointerException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),"Null Pointer Exception" ));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),"","Null Pointer Exception" ));
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<?> HttpMessageNotReadableException(HttpMessageNotReadableException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),"There is error in Json format" ));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),"","There is error in Json format" ));
     }
 
     @ExceptionHandler(PropertyValueException.class)
     public ResponseEntity<?> PropertyValueException(PropertyValueException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),"There is error in Json format"));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),"","There is error in Json format"));
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
@@ -75,14 +75,14 @@ public class GlobalExceptionHandler {
         String paramName = ex.getName();
         String paramValue = Objects.requireNonNull(ex.getValue()).toString();
         String errorMessage = "Type mismatch for parameter '" + paramName + "'. Value '" + paramValue + "' is not of the expected type.";
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),errorMessage));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(500,ex.getMessage(),"",errorMessage));
     }
     
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<?> AuthorizationHandlerFn(AccessDeniedException ex) {
         String msg = ex.getMessage();
         String errorMessage = msg + ", Please contact the administrator.";
-        return ResponseEntity.status(HttpStatus.FORBIDDEN.value()).body(new Response(403, errorMessage, msg));
+        return ResponseEntity.status(HttpStatus.FORBIDDEN.value()).body(new Response(403, errorMessage,"", msg));
     }
     
 }

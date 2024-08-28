@@ -1,18 +1,13 @@
 package com.example.ATM_RECONCILIATION.security.services.impl;
 
 import com.example.ATM_RECONCILIATION.security.configuration.EncryptionAlgo;
-import com.example.ATM_RECONCILIATION.security.models.User;
-import com.example.ATM_RECONCILIATION.security.models.UserModule;
 import com.example.ATM_RECONCILIATION.security.models.UserPermission;
-import com.example.ATM_RECONCILIATION.security.models.request.LoginRequest;
+
 import com.example.ATM_RECONCILIATION.security.models.request.SignInRequest;
 import com.example.ATM_RECONCILIATION.security.models.response.JwtAuthenticationResponse;
-import com.example.ATM_RECONCILIATION.security.models.response.LoginResponse;
+
 import com.example.ATM_RECONCILIATION.security.repos.*;
-import com.example.ATM_RECONCILIATION.security.services.JwtService;
-import com.example.ATM_RECONCILIATION.security.services.SecurityParameterService;
-import com.example.ATM_RECONCILIATION.security.services.SystemConfigurationService;
-import com.example.ATM_RECONCILIATION.security.services.UserDetailsServiceImpl;
+import com.example.ATM_RECONCILIATION.security.services.*;
 import com.example.ATM_RECONCILIATION.security.util.PasswordUtils;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,10 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -37,19 +29,16 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.io.UnsupportedEncodingException;
-import java.net.SocketException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 @Data
-public class AuthenticationServiceImpl implements AuthenticationRepository{
+public class AuthenticationServiceImpl implements AuthenticationRepository {
 	
 	
 	@Value("${mode}")
@@ -71,23 +60,13 @@ public class AuthenticationServiceImpl implements AuthenticationRepository{
 	@Autowired
 	private final AuthenticationManager authenticationManager;
 
-	@Autowired
-	private SystemConfigurationService service;
-	
-	@Autowired
-    SecurityParameterService securityParameterService;
 
-	@Autowired
-	SystemConfigurationDAO dao;
-	
 	@Autowired
 	private HttpServletRequest request;
 	
 	@Autowired
 	private HttpServletResponse httpResponse;
 
-	@Autowired
-	private UserDetailsServiceImpl userDetailsService;
 	@Autowired
 	private UserPermissionsRepository userPermissionRepo;
 
